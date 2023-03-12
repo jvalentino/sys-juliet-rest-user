@@ -1,0 +1,53 @@
+management:
+  apikey: 123
+  securePath: /user
+  health:
+    circuitbreakers:
+      enabled: 'true'
+    ratelimiters:
+      enabled: 'true'
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+spring:
+  application:
+    name: sys-juliet-rest-user
+  jpa:
+    generate-ddl: 'true'
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driverClassName: org.postgresql.Driver
+    password: postgres
+    username: postgres
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/examplesys
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  liquibase:
+    change-log: classpath:changelog.sql
+logging:
+  file:
+    path: .
+    name: spring-boot.log
+  level:
+    org:
+      springframework:
+        web: DEBUG
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        SQL: DEBUG
+springdoc:
+  swagger-ui:
+    url: /v3/api-docs.yaml
+server:
+  port: ${PORT:8080}

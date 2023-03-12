@@ -1,0 +1,43 @@
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// JACACO!
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+    jacoco.excludes = [
+            '**/*$*_closure*',
+            '**/*/MyServletInitializer*',
+            '**/*/UploadConfig*'
+    ]
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+}
+
+// https://stackoverflow.com/questions/43192220/how-can-i-verify-the-minimum-coverage-with-some-excluded-classes-and-with-the-ja
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, excludes: [
+                    '**/*$*_closure*',
+                    '**/*/MyServletInitializer*',
+                    '**/*/UploadConfig*'
+            ])
+        }))
+    }
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                //minimum = 0.85
+            }
+        }
+    }
+}
+
+check {
+    dependsOn jacocoTestCoverageVerification
+}
