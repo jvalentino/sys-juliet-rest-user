@@ -46,6 +46,7 @@ class SecurityFilter extends GenericFilterBean {
         }
 
         if (token != apikey) {
+            log.info("${token} token does not match the api key for ${pathInfo}")
             HttpServletResponse res = (HttpServletResponse) response
             res.status = 401
             return

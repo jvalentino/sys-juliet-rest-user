@@ -51,3 +51,30 @@ springdoc:
     url: /v3/api-docs.yaml
 server:
   port: ${PORT:8080}
+resilience4j:
+  circuitbreaker:
+    instances:
+      UserCount:
+        registerHealthIndicator: true
+        ringBufferSizeInClosedState: 5
+        ringBufferSizeInHalfOpenState: 3
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        maxRetryAttempts: 3
+        waitDuration: 5000
+      UserLogin:
+        registerHealthIndicator: true
+        ringBufferSizeInClosedState: 5
+        ringBufferSizeInHalfOpenState: 3
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        maxRetryAttempts: 3
+        waitDuration: 5000
+      UserList:
+        registerHealthIndicator: true
+        ringBufferSizeInClosedState: 5
+        ringBufferSizeInHalfOpenState: 3
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        maxRetryAttempts: 3
+        waitDuration: 5000

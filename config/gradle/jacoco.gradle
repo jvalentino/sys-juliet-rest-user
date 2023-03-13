@@ -32,7 +32,7 @@ jacocoTestCoverageVerification {
         rule {
             limit {
                 counter = 'LINE'
-                //minimum = 0.85
+                minimum = 0.85
             }
         }
     }

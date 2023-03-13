@@ -87,6 +87,10 @@ class UserService {
         null
     }
 
+    List<AuthUser> findUsers(List<Long> ids) {
+        authUserRepo.findAllById(ids)
+    }
+
     int countCurrentUsers() {
         authUserRepo.count()
     }

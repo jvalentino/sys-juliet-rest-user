@@ -40,10 +40,13 @@ abstract class BaseIntg extends Specification {
     @PersistenceContext
     EntityManager entityManager
 
-
     Object toObject(MvcResult response, Class clazz) {
         String json = response.getResponse().getContentAsString()
         new ObjectMapper().readValue(json, clazz)
+    }
+
+    String toJson(Object obj) {
+        new ObjectMapper().writeValueAsString(obj)
     }
 
 }
