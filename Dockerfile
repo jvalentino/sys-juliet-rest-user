@@ -1,6 +1,6 @@
 FROM openjdk:11
 WORKDIR .
-COPY build/libs/sys-golf-rest-0.0.1.jar /usr/local/sys-golf-rest-0.0.1.jar
+COPY build/libs/sys-juliet-rest-user-0.0.1.jar /usr/local/sys-juliet-rest-user-0.0.1.jar
 EXPOSE 8080
 COPY config/docker/start.sh /usr/local/start.sh
 

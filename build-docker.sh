@@ -1,8 +1,8 @@
 #!/bin/bash
 
-NAME=sys-golf-rest
+NAME=sys-juliet-rest-user
 VERSION=latest
-HELM_NAME=backend
+HELM_NAME=sys-rest-user
 
 helm delete $HELM_NAME || true
 minikube image rm $NAME:$VERSION
