@@ -1,6 +1,6 @@
-# System Juliet REST
+# System Juliet REST User
 
-This application serves as the restful services as part of the overall https://github.com/jvalentino/sys-juliet project. For system level details, please see that location.
+This application serves as the restful services as part of the overall https://github.com/jvalentino/sys-juliet project as they relate to Users. For system level details, please see that location.
 
 Prerequisites
 
@@ -25,11 +25,15 @@ All of these you can get in one command using this installation automation (if y
   * [Strategy](#strategy)
   * [Build](#build)
 - [Dev](#dev)
+  * [Runtime Validation](#runtime-validation)
+    + [Swagger UI](#swagger-ui)
+    + [/user/login](#userlogin)
+    + [/user/list](#userlist)
+    + [/user/count](#usercount)
   * [Prometheus](#prometheus)
     + [build.gradle](#buildgradle)
     + [application.properties](#applicationproperties)
     + [SpringWebConfig](#springwebconfig)
-    + [WebSecurityConfig](#websecurityconfig)
   * [Docker](#docker)
     + [build-docker.sh](#build-dockersh)
     + [Dockerfile](#dockerfile)
@@ -106,9 +110,82 @@ The following builds the executable jar file:
 ./build-docker.sh
 ```
 
-
-
 # Dev
+
+## Runtime Validation
+
+The first step is to refresh the database to the expected default state:
+
+```bash
+./gradlew refreshDb
+```
+
+You need to specifically do this so you set the default admin account to username/password: `admin/37e098f0-b78d-4a48-adf1-e6c2568d4ea1`.
+
+It is then recommended you run thus application on port 8081, which can be done in two ways:
+
+**IDE**
+
+![01](./wiki/ide-1.png)
+
+**Command Line**
+
+```bash
+java -jar --server.port=8081 build/libs/sys-juliet-rest-user-0.0.1.jar
+```
+
+
+
+### Swagger UI
+
+The Swagger UI can then be accessed via http://localhost:8081/swagger-ui/index.html
+
+![01](./wiki/swagger-1.png)
+
+You are then going to want to set the authorization code to `123`, otherwise access will be defined. That is our default/testing API Key.
+
+![01](wiki/authorize.png)
+
+![01](wiki/xauth.png)
+
+### /user/login
+
+![01](wiki/swagger-2.png)
+
+The input payload to work is:
+
+```json
+{
+  "email": "admin",
+  "password": "37e098f0-b78d-4a48-adf1-e6c2568d4ea1"
+}
+```
+
+### /user/list
+
+By default there is a single admin user of ID 1, which you can get by doing this:
+
+![01](wiki/swagger-3.png)
+
+Payload:
+
+```json
+{
+  "values": [
+    1
+  ]
+}
+```
+
+
+
+### /user/count
+
+This just returns the current number of users, which with only the default admin user will be 1.
+
+![01](wiki/swagger-4.png)
+
+
 
 ## Prometheus
 
