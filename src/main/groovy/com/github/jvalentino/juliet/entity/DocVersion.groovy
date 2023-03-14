@@ -1,5 +1,7 @@
 package com.github.jvalentino.juliet.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.github.jvalentino.juliet.util.DateUtil
 import groovy.transform.CompileDynamic
 import org.hibernate.annotations.Type
 
@@ -43,6 +45,7 @@ class DocVersion {
     byte[] data
 
     @Column(name = 'created_datetime')
+    @JsonFormat(pattern= DateUtil.ISO)
     Timestamp createdDateTime
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)

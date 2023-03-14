@@ -1,5 +1,7 @@
 package com.github.jvalentino.juliet.entity
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.github.jvalentino.juliet.util.DateUtil
 import groovy.transform.CompileDynamic
 
 import javax.persistence.CascadeType
@@ -41,9 +43,11 @@ class Doc {
     AuthUser updatedByUser
 
     @Column(name = 'created_datetime')
+    @JsonFormat(pattern= DateUtil.ISO)
     Timestamp createdDateTime
 
     @Column(name = 'updated_datetime')
+    @JsonFormat(pattern=DateUtil.ISO)
     Timestamp updatedDateTime
 
     @OneToMany(mappedBy='doc', fetch = FetchType.LAZY)
