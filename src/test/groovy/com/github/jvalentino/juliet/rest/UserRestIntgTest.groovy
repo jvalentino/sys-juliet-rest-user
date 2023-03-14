@@ -69,8 +69,8 @@ class UserRestIntgTest extends BaseIntg {
                 .andReturn()
 
         then:
-        ResultDto result = this.toObject(response, ResultDto)
-        result.success == true
+        AuthUser result = this.toObject(response, AuthUser)
+        result.email == user.email
     }
 
     void "test login invalid"() {
@@ -89,12 +89,11 @@ class UserRestIntgTest extends BaseIntg {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().is(401))
                 .andReturn()
 
         then:
-        ResultDto result = this.toObject(response, ResultDto)
-        result.success == false
+        true
     }
 
     void "Test listUsers"() {

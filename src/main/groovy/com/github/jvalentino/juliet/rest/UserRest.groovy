@@ -2,7 +2,6 @@ package com.github.jvalentino.juliet.rest
 
 import com.github.jvalentino.juliet.dto.CountDto
 import com.github.jvalentino.juliet.dto.ListDto
-import com.github.jvalentino.juliet.dto.ResultDto
 import com.github.jvalentino.juliet.dto.UserDto
 import com.github.jvalentino.juliet.entity.AuthUser
 import com.github.jvalentino.juliet.service.UserService
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+
+import javax.servlet.http.HttpServletResponse
 
 /**
  * The general rest endpoint for accessing all user related things.
@@ -39,13 +40,13 @@ class UserRest {
 
     @PostMapping('/user/login')
     @CircuitBreaker(name = 'UserLogin')
-    ResultDto login(@RequestBody UserDto input) {
+    AuthUser login(@RequestBody UserDto input, HttpServletResponse response) {
         AuthUser user = userService.isValidUser(input.email, input.password)
 
         if (user == null) {
-            return new ResultDto(success:false)
+            response.status = 401
         }
-        new ResultDto()
+        user
     }
 
     @PostMapping('/user/list')
